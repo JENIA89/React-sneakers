@@ -106,12 +106,16 @@ header{
   box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
   padding: 30px;
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
+
+  .items{
+    flex: 1;
+    overflow: auto;
+  }
+
 }
 
-.items{
-  flex: 1;
-}
+
 
 .cartItem{
   border: 1px solid #F3F3F3;
