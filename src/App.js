@@ -16,7 +16,7 @@ function App() {
           </div>
         </div>
         <div className='d-flex flex-wrap'>
-          <Card />
+          <Card title='ботинки деревенские' price='20' />
         </div>
       </div>
     </div>
