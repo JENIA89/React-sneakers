@@ -6,14 +6,13 @@ export default function Card(props) {
 
   const onClickPlus = () => {
     setIsAdded(!isAdded);
-    console.log(isAdded);
   };
   return (
     <div className={styles.card}>
       <div className={styles.favorite} onClick={props.onFavorite}>
         <img src='/img/unlike-heart.svg' alt='like' />
       </div>
-      <img width={133} height={112} src='/img/sneakers/1.jpg' alt='sneaker' />
+      <img width={133} height={112} src={props.imageUrl} alt='sneaker' />
       <h5>{props.title}</h5>
       <div className='d-flex justify-between align-center'>
         <div className='d-flex flex-column'>

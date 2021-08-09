@@ -1,10 +1,19 @@
 import Drawer from './components/Drawer';
 import Header from './components/Header';
 import Card from './components/Card';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
+  const [items, setItems] = useState([]);
   const [isOpenedCart, setIsOpenedCart] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get('https://61111705c38a0900171f1007.mockapi.io/items')
+      .then((res) => setItems(res.data));
+  }, []);
+
   return (
     <div className='wrapper clear'>
       {isOpenedCart && <Drawer onClose={() => setIsOpenedCart(false)} />}
@@ -18,18 +27,16 @@ function App() {
           </div>
         </div>
         <div className='d-flex flex-wrap'>
-          <Card
-            title='Мужские Кроссовки Nike Blazer Mid Suede'
-            price='12 999'
-            onFavorite={() => console.log('нажали like')}
-            onAdd={() => console.log('нажали плюс')}
-          />
-          <Card
-            title='Мужские Кроссовки Nike Air Max 270'
-            price='10 999'
-            onFavorite={() => console.log('нажали like')}
-            onAdd={() => console.log('нажали плюс')}
-          />
+          {items.map((item, i) => (
+            <Card
+              key={i}
+              title={item.title}
+              price={item.price}
+              imageUrl={item.imageUrl}
+              onFavorite={() => console.log('нажали like')}
+              onAdd={() => console.log('нажали плюс')}
+            />
+          ))}
         </div>
       </div>
     </div>
