@@ -6,6 +6,7 @@ import axios from 'axios';
 
 function App() {
   const [items, setItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [changeValue, setSearch] = useState('');
   const [isOpenedCart, setIsOpenedCart] = useState(false);
 
@@ -13,6 +14,10 @@ function App() {
     axios
       .get('https://61111705c38a0900171f1007.mockapi.io/items')
       .then((res) => setItems(res.data));
+
+    axios
+      .get('https://61111705c38a0900171f1007.mockapi.io/cart')
+      .then((res) => setCartItems(res.data));
   }, []);
 
   const onChangeValue = (e) => {
@@ -24,9 +29,18 @@ function App() {
       item.title.toLowerCase().includes(changeValue.toLowerCase())
     );
 
+  const onAddToCart = (obj) => {
+    axios.post('https://61111705c38a0900171f1007.mockapi.io/cart', obj);
+    setCartItems((prev) => [...prev, obj]);
+  };
+
+  console.log(cartItems);
+
   return (
     <div className='wrapper clear'>
-      {isOpenedCart && <Drawer onClose={() => setIsOpenedCart(false)} />}
+      {isOpenedCart && (
+        <Drawer items={cartItems} onClose={() => setIsOpenedCart(false)} />
+      )}
       <Header onClickCart={() => setIsOpenedCart(true)} />
       <div className='content p-40'>
         <div className='d-flex align-center justify-between mb-40'>
@@ -56,7 +70,7 @@ function App() {
               price={item.price}
               imageUrl={item.imageUrl}
               onFavorite={() => console.log('нажали like')}
-              onAdd={() => console.log('нажали плюс')}
+              onAdd={(obj) => onAddToCart(obj)}
             />
           ))}
         </div>

@@ -1,11 +1,12 @@
-export default function Drawer(props) {
+export default function Drawer({ onClose, items = [] }) {
+  console.log(items);
   return (
     <div className='overlay'>
       <div className='drawer'>
         <h2 className='d-flex align-center justify-between'>
           Корзина
           <img
-            onClick={props.onClose}
+            onClick={onClose}
             className='removeBtn cu-p'
             src='/img/btn-remove.svg'
             alt='remove'
@@ -13,34 +14,26 @@ export default function Drawer(props) {
         </h2>
 
         <div className='items'>
-          <div className='cartItem d-flex align-center mb-20'>
-            <img
-              className='mr-15'
-              width={70}
-              height={70}
-              src='/img/sneakers/1.jpg'
-              alt='sneaker'
-            />
-            <div className='mr-15'>
-              <p className='mb-5'>Мужские Кроссовки Nike Blazer Mid Suede</p>
-              <b>12 999 руб.</b>
+          {items.map((item) => (
+            <div className='cartItem d-flex align-center mb-20'>
+              <img
+                className='mr-15'
+                width={70}
+                height={70}
+                src={item.imageUrl}
+                alt='sneaker'
+              />
+              <div className='mr-15'>
+                <p className='mb-5'>{item.title}</p>
+                <b>{item.price} руб.</b>
+              </div>
+              <img
+                className='removeBtn'
+                src='/img/btn-remove.svg'
+                alt='remove'
+              />
             </div>
-            <img className='removeBtn' src='/img/btn-remove.svg' alt='remove' />
-          </div>
-          <div className='cartItem d-flex align-center'>
-            <img
-              className='mr-15'
-              width={70}
-              height={70}
-              src='/img/sneakers/1.jpg'
-              alt='sneaker'
-            />
-            <div className='mr-15'>
-              <p className='mb-5'>Мужские Кроссовки Nike Blazer Mid Suede</p>
-              <b>12 999 руб.</b>
-            </div>
-            <img className='removeBtn' src='/img/btn-remove.svg' alt='remove' />
-          </div>
+          ))}
         </div>
 
         <div className='cartTotalBlock'>
