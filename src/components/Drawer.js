@@ -1,5 +1,7 @@
-export default function Drawer({ onClose, items = [] }) {
-  console.log(items);
+export default function Drawer({ onRemove, onClose, items = [] }) {
+  const removeItem = (id) => {
+    onRemove(id);
+  };
   return (
     <div className='overlay'>
       <div className='drawer'>
@@ -31,6 +33,7 @@ export default function Drawer({ onClose, items = [] }) {
                 className='removeBtn'
                 src='/img/btn-remove.svg'
                 alt='remove'
+                onClick={() => removeItem(item.id)}
               />
             </div>
           ))}
