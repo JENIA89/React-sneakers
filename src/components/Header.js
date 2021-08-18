@@ -13,6 +13,9 @@ export default function Header(props) {
           <img width={18} src='/img/cart.png' alt='cart' />
           <span>1250 руб.</span>
         </li>
+        <li className='mr-20 cu-p'>
+          <img width={18} src='/img/heart.png' alt='bookMark' />
+        </li>
         <li>
           <img width={18} src='/img/user.png' alt='user' />
         </li>
