@@ -1,0 +1,47 @@
+import Card from '../components/Card';
+
+export default function Home({
+  items,
+  searchValue,
+  onAddToCart,
+  changeValue,
+  onChangeValue,
+  onAddToFavorites,
+  setChangeValue,
+}) {
+  return (
+    <div className='content p-40'>
+      <div className='d-flex align-center justify-between mb-40'>
+        <h1>
+          {changeValue ? `Поиск по запросу: ${changeValue}` : 'Все кроссовки'}
+        </h1>
+        <div className='search-block'>
+          <img src='/img/search.png' alt='search' />
+          <img
+            onClick={() => setChangeValue('')}
+            className='clear cu-p'
+            src='/img/btn-remove.svg'
+            alt='remove'
+          />
+          <input
+            onChange={onChangeValue}
+            placeholder='поиск'
+            value={changeValue}
+          />
+        </div>
+      </div>
+      <div className='d-flex flex-wrap'>
+        {searchValue(items).map((item, i) => (
+          <Card
+            key={i}
+            title={item.title}
+            price={item.price}
+            imageUrl={item.imageUrl}
+            onFavorite={(obj) => onAddToFavorites(obj)}
+            onAdd={(obj) => onAddToCart(obj)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}

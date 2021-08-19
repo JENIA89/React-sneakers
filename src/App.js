@@ -1,14 +1,16 @@
 import Drawer from './components/Drawer';
 import Header from './components/Header';
-import Card from './components/Card';
 import { useEffect, useState } from 'react';
+import { Route } from 'react-router-dom';
 import axios from 'axios';
+import Home from './pages/Home';
+import Favorites from './pages/Favorites';
 
 function App() {
   const [items, setItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [changeValue, setSearch] = useState('');
+  const [changeValue, setChangeValue] = useState('');
   const [isOpenedCart, setIsOpenedCart] = useState(false);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ function App() {
   }, []);
 
   const onChangeValue = (e) => {
-    setSearch(e.target.value);
+    setChangeValue(e.target.value);
   };
 
   const searchValue = (arr) =>
@@ -55,39 +57,20 @@ function App() {
         />
       )}
       <Header onClickCart={() => setIsOpenedCart(true)} />
-      <div className='content p-40'>
-        <div className='d-flex align-center justify-between mb-40'>
-          <h1>
-            {changeValue ? `Поиск по запросу: ${changeValue}` : 'Все кроссовки'}
-          </h1>
-          <div className='search-block'>
-            <img src='/img/search.png' alt='search' />
-            <img
-              onClick={() => setSearch('')}
-              className='clear cu-p'
-              src='/img/btn-remove.svg'
-              alt='remove'
-            />
-            <input
-              onChange={onChangeValue}
-              placeholder='поиск'
-              value={changeValue}
-            />
-          </div>
-        </div>
-        <div className='d-flex flex-wrap'>
-          {searchValue(items).map((item, i) => (
-            <Card
-              key={i}
-              title={item.title}
-              price={item.price}
-              imageUrl={item.imageUrl}
-              onFavorite={(obj) => onAddToFavorites(obj)}
-              onAdd={(obj) => onAddToCart(obj)}
-            />
-          ))}
-        </div>
-      </div>
+      <Route path='/' exact>
+        <Home
+          items={items}
+          changeValue={changeValue}
+          onAddToCart={onAddToCart}
+          searchValue={searchValue}
+          onChangeValue={onChangeValue}
+          onAddToFavorites={onAddToFavorites}
+          setChangeValue={setChangeValue}
+        />
+      </Route>
+      <Route path='/favorites' exact>
+        <Favorites />
+      </Route>
     </div>
   );
 }
