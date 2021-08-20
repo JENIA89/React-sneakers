@@ -21,6 +21,9 @@ function App() {
     axios
       .get('https://61111705c38a0900171f1007.mockapi.io/cart')
       .then((res) => setCartItems(res.data));
+    axios
+      .get('https://61111705c38a0900171f1007.mockapi.io/favorites')
+      .then((res) => setFavorites(res.data));
   }, []);
 
   const onChangeValue = (e) => {
@@ -37,9 +40,24 @@ function App() {
     setCartItems((prev) => [...prev, obj]);
   };
 
-  const onAddToFavorites = (obj) => {
-    axios.post('https://61111705c38a0900171f1007.mockapi.io/favorites', obj);
-    setFavorites((prev) => [...prev, obj]);
+  const onAddToFavorites = async (obj) => {
+    try {
+      if (favorites.find((item) => item.id === obj.id)) {
+        axios.delete(
+          `https://61111705c38a0900171f1007.mockapi.io/favorites/${obj.id}`
+        );
+        setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
+      } else {
+        const { data } = await axios.post(
+          'https://61111705c38a0900171f1007.mockapi.io/favorites',
+          obj
+        );
+        setFavorites((prev) => [...prev, data]);
+      }
+    } catch (error) {
+      console.log(error);
+      alert('Не удалось добавить в фавориты');
+    }
   };
 
   const onRemoveItem = (id) => {
@@ -69,7 +87,7 @@ function App() {
         />
       </Route>
       <Route path='/favorites' exact>
-        <Favorites />
+        <Favorites items={favorites} onAddToFavorites={onAddToFavorites} />
       </Route>
     </div>
   );

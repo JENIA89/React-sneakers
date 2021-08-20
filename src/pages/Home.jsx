@@ -34,11 +34,9 @@ export default function Home({
         {searchValue(items).map((item, i) => (
           <Card
             key={i}
-            title={item.title}
-            price={item.price}
-            imageUrl={item.imageUrl}
             onFavorite={(obj) => onAddToFavorites(obj)}
             onAdd={(obj) => onAddToCart(obj)}
+            {...item}
           />
         ))}
       </div>

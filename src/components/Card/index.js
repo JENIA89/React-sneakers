@@ -1,17 +1,25 @@
 import { useState } from 'react';
 import styles from './Card.module.scss';
 
-export default function Card({ title, imageUrl, price, onAdd, onFavorite }) {
+export default function Card({
+  id,
+  title,
+  imageUrl,
+  price,
+  onAdd,
+  onFavorite,
+  favorited = false,
+}) {
   const [isAdded, setIsAdded] = useState(false);
-  const [isFavorite, setFavorite] = useState(false);
+  const [isFavorite, setFavorite] = useState(favorited);
 
   const onClickPlus = () => {
-    onAdd({ title, imageUrl, price });
+    onAdd({ id, title, imageUrl, price });
     setIsAdded(!isAdded);
   };
 
   const onClickFavorite = () => {
-    onFavorite({ title, imageUrl, price });
+    onFavorite({ id, title, imageUrl, price });
     setFavorite(!isFavorite);
   };
   return (
