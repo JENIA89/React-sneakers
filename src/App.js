@@ -36,8 +36,20 @@ function App() {
     );
 
   const onAddToCart = (obj) => {
-    axios.post('https://61111705c38a0900171f1007.mockapi.io/cart', obj);
-    setCartItems((prev) => [...prev, obj]);
+    try {
+      if (cartItems.find((item) => item.id !== obj.id)) {
+        axios.delete(
+          `https://61111705c38a0900171f1007.mockapi.io/cart/${obj.id}`
+        );
+        setCartItems((prev) => prev.filter((item) => item.id !== obj.id));
+      } else {
+        axios.post('https://61111705c38a0900171f1007.mockapi.io/cart', obj);
+        setCartItems((prev) => [...prev, obj]);
+      }
+    } catch (error) {
+      console.log(error);
+      alert('Не удалось добавить в корзину');
+    }
   };
 
   const onAddToFavorites = async (obj) => {
