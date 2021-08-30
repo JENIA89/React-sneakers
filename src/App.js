@@ -12,18 +12,25 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [changeValue, setChangeValue] = useState('');
   const [isOpenedCart, setIsOpenedCart] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get('https://61111705c38a0900171f1007.mockapi.io/items')
-      .then((res) => setItems(res.data));
-
-    axios
-      .get('https://61111705c38a0900171f1007.mockapi.io/cart')
-      .then((res) => setCartItems(res.data));
-    axios
-      .get('https://61111705c38a0900171f1007.mockapi.io/favorites')
-      .then((res) => setFavorites(res.data));
+    async function fetchData() {
+      const itemsResponse = await axios.get(
+        'https://61111705c38a0900171f1007.mockapi.io/items'
+      );
+      const itemsCartResponse = await axios.get(
+        'https://61111705c38a0900171f1007.mockapi.io/cart'
+      );
+      const itemsFavoriteResponse = await axios.get(
+        'https://61111705c38a0900171f1007.mockapi.io/favorites'
+      );
+      setIsLoading(false);
+      setCartItems(itemsCartResponse.data);
+      setFavorites(itemsFavoriteResponse.data);
+      setItems(itemsResponse.data);
+    }
+    fetchData();
   }, []);
 
   const onChangeValue = (e) => {
@@ -98,6 +105,8 @@ function App() {
           onChangeValue={onChangeValue}
           onAddToFavorites={onAddToFavorites}
           setChangeValue={setChangeValue}
+          cartItems={cartItems}
+          isLoading={isLoading}
         />
       </Route>
       <Route path='/favorites' exact>

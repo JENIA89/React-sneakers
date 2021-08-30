@@ -1,6 +1,7 @@
 import Card from '../components/Card';
 
 export default function Home({
+  cartItems,
   items,
   searchValue,
   onAddToCart,
@@ -8,7 +9,21 @@ export default function Home({
   onChangeValue,
   onAddToFavorites,
   setChangeValue,
+  isLoading,
 }) {
+  const renderCards = () => {
+    return (isLoading ? [...Array(8)] : searchValue(items)).map((item, i) => (
+      <Card
+        key={i}
+        onFavorite={(obj) => onAddToFavorites(obj)}
+        onAdd={(obj) => onAddToCart(obj)}
+        added={cartItems.some((obj) => +obj.id === +item.id)}
+        loading={isLoading}
+        {...item}
+      />
+    ));
+  };
+
   return (
     <div className='content p-40'>
       <div className='d-flex align-center justify-between mb-40'>
@@ -30,16 +45,7 @@ export default function Home({
           />
         </div>
       </div>
-      <div className='d-flex flex-wrap'>
-        {searchValue(items).map((item, i) => (
-          <Card
-            key={i}
-            onFavorite={(obj) => onAddToFavorites(obj)}
-            onAdd={(obj) => onAddToCart(obj)}
-            {...item}
-          />
-        ))}
-      </div>
+      <div className='d-flex flex-wrap'>{renderCards()}</div>
     </div>
   );
 }
