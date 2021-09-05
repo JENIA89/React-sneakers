@@ -1,7 +1,7 @@
 # React sneakers 
 В данном проекте мы используем:
 - React
-- React sckeleton
+- React skeleton
 - Mock API
 
 
