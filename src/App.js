@@ -6,8 +6,7 @@ import { Route } from 'react-router-dom';
 import axios from 'axios';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
-
-const AppContext = React.createContext({});
+import AppContext from './context';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -90,7 +89,7 @@ function App() {
   };
 
   return (
-    <AppContext.Provider>
+    <AppContext.Provider value={{ items, favorites, cartItems }}>
       <div className='wrapper clear'>
         {isOpenedCart && (
           <Drawer
@@ -114,7 +113,7 @@ function App() {
           />
         </Route>
         <Route path='/favorites' exact>
-          <Favorites items={favorites} onAddToFavorites={onAddToFavorites} />
+          <Favorites onAddToFavorites={onAddToFavorites} />
         </Route>
       </div>
     </AppContext.Provider>
