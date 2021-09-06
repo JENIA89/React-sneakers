@@ -88,8 +88,10 @@ function App() {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const isAddedToCart = (id) => cartItems.some((obj) => +obj.id === +id);
+
   return (
-    <AppContext.Provider value={{ items, favorites, cartItems }}>
+    <AppContext.Provider value={{ items, favorites, cartItems, isAddedToCart }}>
       <div className='wrapper clear'>
         {isOpenedCart && (
           <Drawer
