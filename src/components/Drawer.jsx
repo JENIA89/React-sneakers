@@ -1,3 +1,5 @@
+import { Info } from './Info';
+
 export default function Drawer({ onRemove, onClose, items = [] }) {
   const removeItem = (id) => {
     onRemove(id);
@@ -16,7 +18,7 @@ export default function Drawer({ onRemove, onClose, items = [] }) {
         </h2>
 
         {items.length > 0 ? (
-          <div>
+          <div className='d-flex flex flex-column'>
             <div className='items'>
               {items.map((item) => (
                 <div
@@ -63,23 +65,11 @@ export default function Drawer({ onRemove, onClose, items = [] }) {
             </div>
           </div>
         ) : (
-          <div className='cartEmpty d-flex align-center justify-center flex-column flex'>
-            <img
-              className='mb-20'
-              width={120}
-              height={120}
-              src='/img/cart-empty.png'
-              alt='cart'
-            />
-            <h2>Корзина пустая</h2>
-            <p className='opacity-6'>
-              Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ
-            </p>
-            <button className='greenButton' onClick={onClose}>
-              <img src='/img/arrow.png' alt='arrow' />
-              Вернуться назад
-            </button>
-          </div>
+          <Info
+            title='Корзина пустая'
+            description='Добавьте хотя бы одну пару крассовок !'
+            img='/img/cart-empty.png'
+          />
         )}
       </div>
     </div>

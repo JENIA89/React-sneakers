@@ -91,7 +91,9 @@ function App() {
   const isAddedToCart = (id) => cartItems.some((obj) => +obj.id === +id);
 
   return (
-    <AppContext.Provider value={{ items, favorites, cartItems, isAddedToCart }}>
+    <AppContext.Provider
+      value={{ items, favorites, cartItems, isAddedToCart, setIsOpenedCart }}
+    >
       <div className='wrapper clear'>
         {isOpenedCart && (
           <Drawer
